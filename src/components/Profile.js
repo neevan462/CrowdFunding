@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import "./ProfilePage.css";
 
+import Footer from "./Footer"
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("contributions");
   const renderContent = () => {
@@ -19,6 +20,7 @@ const Profile = () => {
     }
   };
   return (
+    <>
     <div className="profile-page">
       {/* Header Section */}
       <div className="profile-header">
@@ -66,14 +68,9 @@ const Profile = () => {
 
       {/* Content Section */}
       <div className="tab-content">{renderContent()}</div>
-
-      {/* Footer */}
-      <div className="profile-footer">
-        <a href="#help">Help</a>
-        <a href="#support">Support</a>
-        <a href="#settings">Settings</a>
-      </div>
     </div>
+    <Footer />
+    </>
   );
 };
 

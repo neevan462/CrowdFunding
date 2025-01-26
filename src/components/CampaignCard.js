@@ -1,27 +1,20 @@
-import React from 'react';
-import './CampaignCard.css';
+// CampaignCard.js
+import React from "react";
+import "./CampaignCard.css";
 
-const CampaignCard = ({ title, description, goal, raised, image }) => {
-  // Calculate the progress percentage
-  const progress = (raised / goal) * 100;
-
+const CampaignCard = ({ image, title, description, progress, raised, goal, onViewDetails }) => {
   return (
     <div className="campaign-card">
-      <img className="campaign-image" src={image} alt={title} />
-      <div className="campaign-details">
-        <h2 className="campaign-title">{title}</h2>
-        <p className="campaign-description">{description}</p>
-        <div className="campaign-progress">
-          <div
-            className="progress-bar"
-            style={{ width: `${progress}%` }}
-          ></div>
-        </div>
-        <div className="campaign-footer">
-          <span className="campaign-goal">Goal: ${goal}</span>
-          <span className="campaign-raised">Raised: ${raised}</span>
-        </div>
+      <img src={image} alt={title} />
+      <h3>{title}</h3>
+      <p>{description}</p>
+      <div className="progress-bar">
+        <div className="progress" style={{ width: `${progress}%` }}></div>
       </div>
+      <p className="funding-stats">Raised: ${raised} / ${goal}</p>
+      <button className="btn-primary" onClick={onViewDetails}>
+        View Details
+      </button>
     </div>
   );
 };
