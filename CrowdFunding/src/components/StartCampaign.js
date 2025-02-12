@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import axios from "axios";
 import "./StartCampaign.css";
@@ -9,39 +10,49 @@ const StartCampaign = () => {
     goal: "",
     duration: "",
     category: "",
-    banner: null,
+    imageUrl: "", // Added image URL field
   });
 
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  // Handle input change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleFileChange = (e) => {
-    setFormData({ ...formData, banner: e.target.files[0] });
-  };
-
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const campaignData = new FormData();
-    Object.keys(formData).forEach((key) => {
-      campaignData.append(key, formData[key]);
-    });
+    setLoading(true);
+    setMessage("");
 
     try {
-      const response = await axios.post("/api/create-campaign", campaignData);
-      if (response.status === 200) {
-        alert("Campaign created successfully!");
+      const token = localStorage.getItem("token"); // Retrieve JWT token from localStorage
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`, // Send token in Authorization header
+        },
+      };
+
+      const response = await axios.post("http://localhost:5000/api/create-campaign", formData,config);
+     
+      if (response.status === 201) {
+        setMessage("Campaign created successfully!");
+        setFormData({ title: "", description: "", goal: "", duration: "", category: "", imageUrl: "" });
       }
     } catch (error) {
-      console.error("Error creating campaign:", error);
-      alert("Failed to create campaign.");
+      setMessage("Failed to create campaign.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="start-campaign">
       <h1>Start a Campaign</h1>
+      {message && <p className="message">{message}</p>}
       <form onSubmit={handleSubmit} className="campaign-form">
         <input
           type="text"
@@ -85,9 +96,16 @@ const StartCampaign = () => {
           <option value="Education">Education</option>
           <option value="Environment">Environment</option>
         </select>
-        <input type="file" name="banner" onChange={handleFileChange} required />
-        <button type="submit" className="btn-submit">
-          Create Campaign
+        <input
+          type="text"
+          name="imageUrl"
+          placeholder="Enter Image URL"
+          value={formData.imageUrl}
+          onChange={handleInputChange}
+          required
+        />
+        <button type="submit" className="btn-submit" disabled={loading}>
+          {loading ? "Creating..." : "Create Campaign"}
         </button>
       </form>
     </div>

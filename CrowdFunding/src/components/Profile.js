@@ -1,8 +1,8 @@
 
 import React, { useState } from "react";
 import "./ProfilePage.css";
-
-import Footer from "./Footer"
+import "./HomePage.css"
+import Footer from "./Footer";
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("contributions");
   const renderContent = () => {
@@ -20,7 +20,6 @@ const Profile = () => {
     }
   };
   return (
-    <>
     <div className="profile-page">
       {/* Header Section */}
       <div className="profile-header">
@@ -68,9 +67,8 @@ const Profile = () => {
 
       {/* Content Section */}
       <div className="tab-content">{renderContent()}</div>
+        <Footer/>
     </div>
-    <Footer />
-    </>
   );
 };
 

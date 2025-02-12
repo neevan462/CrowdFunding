@@ -1,7 +1,7 @@
 // CampaignsPage.js
 import React from "react";
 import "./Campaigns.css";
-
+import { Link } from "react-router-dom";
 const Campaigns = () => {
   return (
     <div className="campaigns-page">
@@ -58,7 +58,8 @@ const Campaigns = () => {
                 ></div>
               </div>
               <p className="funding-stats">Raised: $5,000 / $10,000</p>
-              <button className="btn-primary">View Details</button>
+              <Link to='campaign-details'>
+              <button className="btn-primary">View Details</button></Link>
             </div>
           ))}
         </div>

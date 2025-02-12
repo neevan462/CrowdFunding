@@ -1,8 +1,10 @@
-// CampaignCard.js
+// <Link to={`/campaign-details/${id}`}></Link> in link this statement to be present for each user
+
 import React from "react";
+import { Link } from "react-router-dom";  // Import Link for navigation
 import "./CampaignCard.css";
 
-const CampaignCard = ({ image, title, description, progress, raised, goal, onViewDetails }) => {
+const CampaignCard = ({ id, image, title, description, progress, raised, goal }) => {
   return (
     <div className="campaign-card">
       <img src={image} alt={title} />
@@ -12,9 +14,9 @@ const CampaignCard = ({ image, title, description, progress, raised, goal, onVie
         <div className="progress" style={{ width: `${progress}%` }}></div>
       </div>
       <p className="funding-stats">Raised: ${raised} / ${goal}</p>
-      <button className="btn-primary" onClick={onViewDetails}>
-        View Details
-      </button>
+      <Link to={`/campaign-details`}>
+        <button className="btn-primary">View Details</button>
+      </Link>
     </div>
   );
 };
